@@ -1,16 +1,42 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { toast, Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [roomId, setRoomId] = useState("");
   const [userName, setUserName] = useState("");
+  const navigate = useNavigate();
 
+  //   function for creating new room
   const createNewRoom = (e) => {
     e.preventDefault();
     const uid = uuidv4();
     setRoomId(uid);
     toast.success("New room created");
+  };
+
+  //   function for joining room
+  const joinRoom = () => {
+    if (!roomId || !userName) {
+      toast.error("ROOM ID & Username is required");
+      return;
+    }
+
+    // redirect user
+    navigate(`/editor/${roomId}`, {
+      // inbuild feature of react-router-dom
+      state: {
+        userName, // getting the value of username from home page
+      },
+    });
+  };
+
+  //   function for enter key input
+  const handleInputEnter = (e) => {
+    if (e.code === "Enter") {
+      joinRoom();
+    }
   };
 
   return (
@@ -23,6 +49,7 @@ const Home = () => {
             type="text"
             placeholder="ROOM ID"
             className="bg-white mt-5 p-1 rounded-sm outline-none"
+            onKeyUp={handleInputEnter}
             value={roomId}
             onChange={(e) => setRoomId(e.target.value)} // if user copy paste id then store it in state var
           />
@@ -30,10 +57,14 @@ const Home = () => {
             type="text"
             placeholder="USERNAME"
             className="bg-white mt-5 p-1 rounded-sm outline-none"
+            onKeyUp={handleInputEnter}
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
-          <button className="bg-[#4aee88] hover:bg-[#2eba64] px-10 cursor-pointer transition-all duration-250 ease-in-out self-end mt-2 py-1 rounded-sm font-semibold">
+          <button
+            onClick={joinRoom}
+            className="bg-[#4aee88] hover:bg-[#2eba64] px-10 cursor-pointer transition-all duration-250 ease-in-out self-end mt-2 py-1 rounded-sm font-semibold"
+          >
             Join
           </button>
           <span className="text-white text-sm text-center mt-5">
