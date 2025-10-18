@@ -6,17 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "server-dev": "nodemon server.js",
+    "server-prod": "node server.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.14",
     "codemirror": "^5.65.20",
+    "express": "^5.1.0",
     "react": "^19.1.1",
     "react-avatar": "^5.0.4",
     "react-dom": "^19.1.1",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.9.3",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.14",
     "uuid": "^13.0.0"
   },
